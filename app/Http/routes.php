@@ -25,7 +25,7 @@ Route::post('/createbook',[
     'as'=>'book',
     'middleware'=>'auth'
 ]);
-Route::post('/homepage',[
+Route::any('/homepage',[
     'uses'=>'BookController@getHomepage',
     'as'=>'homepage',
     'middleware'=>'auth'

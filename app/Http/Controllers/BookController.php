@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class BookController extends Controller
 {
@@ -33,11 +34,12 @@ class BookController extends Controller
         }
         else
         {
-       flash('There was an error while uploading and creating your book');
+       return redirect()->back();
         }
     }
    public function getHomepage()
-   {
-       
+   {    Session::set('name',Auth::user()->username);
+       $books=Book::where('avatar_id',Auth::user()->id)->get();
+       return view('main.homepage')->with(['books'=>$books]);
    }
 }

@@ -2,6 +2,7 @@
 @section('title')
 
 @endsection
+
 @section('content')
     <div class="col-md-4 col-md-offset-4">
         {{Form::open(['url'=>'createbook','method'=>'post','files'=>true,'class'=>'form'])}}
@@ -21,5 +22,7 @@
 
         {{Form::submit('Create book',['id'=>'login-button','class'=>'btn btn primary'])}}
         {{Form::close()}}
+
     </div>
+
 @endsection

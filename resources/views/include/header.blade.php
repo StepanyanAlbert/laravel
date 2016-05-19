@@ -2,13 +2,13 @@
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            @if(Auth::check())
+            @if (Auth::check())
+                <span class="navbar-brand">Welcome {{Auth::user()->username}}!!!</span>
 
-                <span class="navbar-brand">Welcome {{Session::get('name')}}!!!</span>
 
-            @else
-                <span class="navbar-brand">Welcome guest!!!</span>
+                @else <span class="navbar-brand">Welcome guest!!</span>
             @endif
+
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
 
@@ -20,6 +20,9 @@
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSignin">
                                 Log out
                             </button></a>
+                            <a href="{{url('homepage')}}">
+                                <button class="btn btn-success">Go to homepage</button>
+                            </a>
                             @else
                                     <a href="{{url('getlogin')}}">
                                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSignin">
