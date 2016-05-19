@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
+    public $username;
     public function Login(Request $request)
     {
         $this->validate($request,[
@@ -19,15 +21,23 @@ class LoginController extends Controller
 
         if(Auth::attempt(['username'=>$request['username'],'password'=>$request['password']]))
         {
-            return view('welcome.dashboard',['name'=>$request['username']]);
+            Session::set('name',$request['username']);
+            return redirect()->route('getdashboard');
+
         }else{
-            return redirect()->route('signup');
+            return redirect()->back()->withErrors([
+                'error' => 'These credentials do not match our records.',
+            ]);
         }
+    }
+    public function  getdashboard()
+    {
+        return   view('main.dashboard');
     }
     public function SignUp(Request $request)
     {
         $this->validate($request, [
-           'username'=>'required|min:5|max:12|string|unique:avatars',
+            'username'=>'required|min:5|max:12|unique:avatars',
             'password'=>'required|min:6|max:12',
             'email'=>'required|email|unique:avatars'
         ]);
@@ -37,20 +47,18 @@ class LoginController extends Controller
         $avatar->password=bcrypt($request['password']);
         $avatar->save();
         Auth::login($avatar);
-        return redirect()->route('dashboard')->with(array('name'=>$request['username']));
+        return redirect()->route('homepage')->with(array('name'=>$request['username']));
 
     }
-    public function gedDashboard()
-    {
-        return view('welcome.dashboard');
-    } 
+  
     public function logout()
     {
         Auth::logout();
-        return  view('welcome.welcome');
+        return  view('welcome.login');
     }
     public function getlogin()
     {
-        return view('welcome.welcome');
+        return view('welcome.login');
     }
+
 }

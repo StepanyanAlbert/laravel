@@ -1,12 +1,13 @@
-@if(Auth::check())
+
 <nav class="navbar navbar-default">
     <div class="container">
         <div class="navbar-header">
-            @if (isset($name))
-                <span class="navbar-brand">Welcome {{$name}}!!!</span>
+            @if(Auth::check())
+
+                <span class="navbar-brand">Welcome {{Session::get('name')}}!!!</span>
 
             @else
-                <span class="navbar-brand">Welcome !!!</span>
+                <span class="navbar-brand">Welcome guest!!!</span>
             @endif
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -14,16 +15,20 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <div class="btn-group navbar-btn" role="group" aria-label="logout">
-                        <a href="logout">
+                        @if(Auth::check())
+                        <a href="{{url('logout')}}">
                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSignin">
                                 Log out
-                            </button>
-                        </a>
+                            </button></a>
+                            @else
+                                    <a href="{{url('getlogin')}}">
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalSignin">
+                                            Log in
+                                        </button></a>
+                                @endif
                     </div>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
-@endif

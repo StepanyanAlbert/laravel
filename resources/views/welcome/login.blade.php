@@ -6,7 +6,7 @@
     @section('content')
 
         <div class="col-md-2 col-md-offset-5">
-            {{Form::open(['url'=>'signin','method'=>'post','class'=>'form'])}}
+            {{Form::open(['url'=>'login','method'=>'post','class'=>'form'])}}
             <div class="form-group {{$errors->has('username') ? 'has-error':''}}">
                 {{Form::label('username','Username')}}
                 {{Form::text('username',Request::old('username'),['placeholder'=>'Username','class'=>'form-control'])}}
